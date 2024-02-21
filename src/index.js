@@ -1,25 +1,12 @@
-const base_url = "https://pokeapi.co/api/v2/";
+import funcions from "./funcions";
 
-export const getPokemon = async (name) => {
-    const response = await fetch(`${base_url}pokemon/${name}`);
-    const data = await response.json();
-    return data;
+async function main(){
+    const pokemon = await funcions.getPokemon("pikachu");
+    console.log(pokemon);
+    const ability = await funcions.getAbility("static");
+    console.log(ability);
 }
 
-export const getAbility = async (name) => {
-    const response = await fetch(`${base_url}ability/${name}`);
-    const data = await response.json();
-    return data;
-}
+main();
 
-export const getMove = async (name) => {
-    const response = await fetch(`${base_url}move/${name}`);
-    const data = await response.json();
-    return data;
-}
-
-export const getType = async (name) => {
-    const response = await fetch(`${base_url}type/${name}`);
-    const data = await response.json();
-    return data;
-}
+export default main;
