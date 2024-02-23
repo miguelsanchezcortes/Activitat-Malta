@@ -1,4 +1,4 @@
-import funcions from "./funcions";
+import funcions from "./funcions.js";
 
 async function main(){
     const pokemon = await funcions.getPokemon("pikachu");
