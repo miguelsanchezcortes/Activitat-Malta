@@ -39,13 +39,25 @@ export const getTypeByPokemon = async (name) => {
     return types;
 }
 
+const createPokemon = async (name, type) => {
+    const pokemon = await getPokemon(name);
+    const species = await getSpecies(name);
+    const types = await getType(type);
+    return {
+        ...pokemon,
+        species: species,
+        types: types
+    }
+}
+
 const funcions = {
     getPokemon,
     getAbility,
     getMove,
     getType,
     getSpecies,
-    getTypeByPokemon
+    getTypeByPokemon,
+    createPokemon,
 };
 
 export default funcions;
