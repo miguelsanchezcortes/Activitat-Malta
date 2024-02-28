@@ -1,7 +1,9 @@
 //npm install json-server
 //npx json-server db.json
 
-const base_url = "https://pokeapi.co/api/v2/";
+//https://pokeapi.co/api/v2/
+//https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0
+const base_url = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
 
 export const getPokemon = async (name) => {
     const response = await fetch(`${base_url}pokemon/${name}`);
@@ -55,7 +57,7 @@ const createPokemon = async (name, type) => {
 async function downloadAndSaveData() {
     try {
         // Realizar solicitud a la PokeAPI para obtener todos los Pokémon
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon');
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
         if (!response.ok) {
             throw new Error('No se pudo obtener la respuesta de la PokeAPI');
         }

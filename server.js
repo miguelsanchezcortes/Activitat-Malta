@@ -15,7 +15,4 @@ server.use(router);
 server.listen(port, () => {
     console.log(`JSON Server está corriendo en el puerto ${port}`);
 });
-
-
 //npm install -g json-server
-
