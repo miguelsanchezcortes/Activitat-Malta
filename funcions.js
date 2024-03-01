@@ -67,9 +67,9 @@ async function downloadAndSaveData() {
         const savedDataResponse = await fetch("http://localhost:3000/pokemons");
         const savedPokemonData = await savedDataResponse.json();
 
+        
         // Verificar si los datos descargados son los mismos que los guardados
         const areEqual = JSON.stringify(pokemonData) === JSON.stringify(savedPokemonData);
-
         if (areEqual) {
             console.log('Los datos descargados son iguales a los datos guardados anteriormente.');
         } else {
@@ -81,6 +81,8 @@ async function downloadAndSaveData() {
                 },
                 body: JSON.stringify(pokemonData)
             });
+            const result = await resposta.json();
+            
 
             console.log('Datos de la PokeAPI guardados correctamente en db.json');
         }
@@ -88,6 +90,69 @@ async function downloadAndSaveData() {
         console.error('Error al descargar datos de la PokeAPI:', error);
     }
 }
+
+async function crearPokemon(){
+    try{
+        const nouPokemon = {
+            name: "Miguel",
+            url: "https://pokeapi.co/api/v2/pokemon/1/"
+        }
+        const resposta = await fetch("http://localhost:3000/pokemons", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nouPokemon)
+        });
+        const result = await resposta.json();
+        console.log("Pokemon creat", result);
+
+    }catch(error){
+        console.error("Error al crear pokemon", error);
+    }
+}
+
+async function actualitzarPokemon(){
+    try{
+        const id = 104;
+        const pokemonActualitzat = {
+            name: "Pablo",
+            url: "https://pokeapi.co/api/v2/pokemon/1/"
+        }
+        const resposta = await fetch(`http://localhost:3000/pokemons/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(pokemonActualitzat)
+        });
+        if(resposta.ok){
+            console.log("Pokemon actualitzat correctament");
+            const result = await resposta.json();
+            console.log("Pokemon actualitzat", result);
+        }
+    }catch(error){
+        console.error("Error al actualitzar pokemon", error);
+    }
+}
+
+async function eliminarPokemon(){
+    try{
+        const id = 104;
+        const resposta = await fetch(`http://localhost:3000/pokemons/${id}`, {
+            method: "DELETE"
+        });
+        if(resposta.ok){
+            console.log("Pokemon eliminat correctament");
+            const result = await resposta.json();
+            console.log("Pokemon eliminat", result);
+        }
+    }catch(error){
+        console.error("Error al eliminar pokemon", error);
+    }
+
+}
+
 
 // Agrega un event listener al botón con id "carregaPokemons"
 document
@@ -111,9 +176,9 @@ document
 
         console.log(data);
 
-        data.pokemons[0].results.forEach(pokemon => {
-            console.log(pokemon.name);
-        });
+        // data.pokemons[0].results.forEach(pokemon => {
+        //     console.log(pokemon.name);
+        // });
         
         //console.log("Llista de pokemoms", data.pokemons.results);
         return ("Llista de pokemoms", data.pokemons);
@@ -121,6 +186,36 @@ document
         console.error("Error al llistar pokemons:", error);
     }
 });
+
+document
+  .getElementById("crearPokemon")
+  .addEventListener("click", async function () {
+    try {
+        await crearPokemon();
+    } catch (error) {
+        console.error("Error al crear pokemon:", error);
+    }
+});
+
+document
+    .getElementById("actualitzarPokemon")
+    .addEventListener("click", async function () {
+        try {
+            await actualitzarPokemon();
+        } catch (error) {
+            console.error("Error al actualitzar pokemon:", error);
+        }
+    });
+
+document
+    .getElementById("eliminarPokemon")
+    .addEventListener("click", async function () {
+        try {
+            await eliminarPokemon();
+        } catch (error) {
+            console.error("Error al eliminar pokemon:", error);
+        }
+    });
 
 const funcions = {
     getPokemon,
